@@ -1,0 +1,33 @@
+﻿<Window x:Class="TextEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextEditor"
+        mc:Ignorable="d"
+        MinHeight="250" MinWidth="420"
+        Title="Text Editor - NewTextFile" Height="500" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#0C0C0D">
+            <Menu Grid.Row="0" Width="Auto" Height="Auto" Background="#0C0C0D">
+                <MenuItem Header="File" FontSize="15" Foreground="#F9F9FA">
+                    <MenuItem Header="Open" Foreground="#000000" Click="Open_Click"/>
+                    <MenuItem Header="Save" Foreground="#000000" Click="Save_Click"/>
+                </MenuItem>
+                <MenuItem Header="Edit" FontSize="15" Foreground="#F9F9FA">
+                    <MenuItem Name="copyBtn" Header="Copy" Foreground="#000000" Click="Copy_Click"/>
+                    <MenuItem Header="Cut" Foreground="#000000" Click="Cut_Click"/>
+                    <MenuItem Header="Paste" Foreground="#000000" Click="Paste_Click"/>
+                    <MenuItem Header="Select All" Foreground="#000000" Click="SelectAll_Click"/>
+                </MenuItem>
+            </Menu>
+            <Label Content="AutoSave:" FontSize="15" Margin="0 -4 0 0" Foreground="#F9F9FA"/>
+            <CheckBox Margin="-4 5 0 0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        </StackPanel>
+        <TextBox Name="contentTextBox" Grid.Row="1" SpellCheck.IsEnabled="True" FontSize="18" TextWrapping="Wrap" AcceptsReturn="True"/>
+    </Grid>
+</Window>
