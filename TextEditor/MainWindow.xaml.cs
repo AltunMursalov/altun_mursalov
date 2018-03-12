@@ -45,7 +45,8 @@ namespace TextEditor {
                                 writer.WriteLine(contentTextBox.Text);
                             }
                         }
-                    } else if (result == MessageBoxResult.Cancel) {
+                    }
+                    else if (result == MessageBoxResult.Cancel) {
                         return;
                     }
                 }
@@ -80,17 +81,18 @@ namespace TextEditor {
         private void Cut_Click(object sender, RoutedEventArgs e) {
             if (contentTextBox.SelectedText != String.Empty) {
                 Clipboard.SetText(contentTextBox.SelectedText);
-                contentTextBox.Text = contentTextBox.Text.Replace(contentTextBox.SelectedText, String.Empty);
+                contentTextBox.Text = contentTextBox.Text.Remove(contentTextBox.SelectionStart, contentTextBox.SelectionLength);
             }
         }
 
         private void Paste_Click(object sender, RoutedEventArgs e) {
-            contentTextBox.Text += Clipboard.GetText();
+            contentTextBox.Text = contentTextBox.Text.Insert(contentTextBox.SelectionStart, Clipboard.GetText());
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e) {
-            if (contentTextBox.SelectedText != String.Empty)
+            if (contentTextBox.Text != String.Empty) {
                 contentTextBox.SelectAll();
+            }
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e) {
@@ -110,6 +112,26 @@ namespace TextEditor {
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e) {
             timer.Stop();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (contentTextBox.Text != String.Empty) {
+                var result = MessageBox.Show("Do you want to save the current text?", "Info", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes) {
+                    SaveFileDialog saveFile = new SaveFileDialog {
+                        DefaultExt = ".txt",
+                        AddExtension = true,
+                        Filter = "TXT Files (*.txt)|*.txt"
+                    };
+                    if (saveFile.ShowDialog() == true) {
+                        using (FileStream stream = new FileStream(saveFile.FileName,
+                            FileMode.Create, FileAccess.ReadWrite)) {
+                            StreamWriter writer = new StreamWriter(stream);
+                            writer.WriteLine(contentTextBox.Text);
+                        }
+                    }
+                }
+            }
         }
     }
 }

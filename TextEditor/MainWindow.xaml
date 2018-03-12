@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
         MinHeight="250" MinWidth="420"
+        Closing="Window_Closing"
         Title="Text Editor - NewTextFile" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
